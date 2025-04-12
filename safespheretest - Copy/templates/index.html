@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeSphere - Women's Safety Platform</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark-blue: #0D1B2A;
+            --bg-gradient: linear-gradient(135deg, #0D1B2A 0%, #1B263B 100%);
+            --text-white: #FFFFFF;
+            --notification-bg: rgba(245, 245, 245, 0.98);
+            --alert-red: #E63946;
+            --bounding-box-red: #FF0000;
+            --slogan-pink: #F0A6CA;
+            --accent-blue: #457B9D;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-white);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Floating female symbols */
+        .floating-symbol {
+            position: fixed;
+            font-size: 2rem;
+            color: var(--slogan-pink);
+            opacity: 0.6;
+            animation: float 6s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+            100% {
+                transform: translateY(0) rotate(360deg);
+            }
+        }
+
+        .symbol-1 { top: 10%; left: 5%; animation-delay: 0s; }
+        .symbol-2 { top: 20%; right: 5%; animation-delay: 1s; }
+        .symbol-3 { bottom: 20%; left: 10%; animation-delay: 2s; }
+        .symbol-4 { bottom: 10%; right: 10%; animation-delay: 3s; }
+        .symbol-5 { top: 50%; left: 15%; animation-delay: 4s; }
+        .symbol-6 { top: 40%; right: 15%; animation-delay: 5s; }
+
+        .header {
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 2;
+        }
+
+        .title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-white);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 2px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px var(--slogan-pink);
+            }
+            to {
+                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px var(--slogan-pink);
+            }
+        }
+
+        .slogan {
+            font-size: 1.2rem;
+            color: var(--slogan-pink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+        }
+
+        .slogan:hover {
+            opacity: 1;
+        }
+
+        .video-container {
+            position: relative;
+            width: 60%; /* Reduced from 90% */
+            max-width: 800px; /* Reduced from 1200px */
+            margin: 2rem auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3),
+                       0 0 20px rgba(240, 166, 202, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            z-index: 2;
+        }
+
+        .video-feed {
+            width: 100%;
+            display: block;
+            border-radius: 15px;
+            background-color: rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: var(--notification-bg);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2),
+                       0 0 30px rgba(230, 57, 70, 0.3);
+            max-width: 350px;
+            display: none;
+            animation: slideIn 0.3s ease-out;
+            z-index: 1000;
+            border: 2px solid var(--alert-red);
+        }
+
+        .notification h2 {
+            color: var(--alert-red);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .notification h2::before {
+            content: "⚠️";
+        }
+
+        .notification p {
+            color: var(--bg-dark-blue);
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+            line-height: 1.4;
+            padding-left: 1rem;
+            border-left: 3px solid var(--alert-red);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5rem;
+            }
+
+            .slogan {
+                font-size: 1rem;
+            }
+
+            .video-container {
+                width: 95%;
+                margin: 1rem auto;
+            }
+
+            .notification {
+                width: 90%;
+                right: 5%;
+                bottom: 1rem;
+            }
+        }
+
+        /* Status Indicator */
+        .status-indicator {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #4CAF50;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 class="title">SafeSphere</h1>
+        <div class="slogan">
+            SafeSphere is here to protect you. ♀️
+        </div>
+    </div>
+
+    <div class="status-indicator">
+        <div class="status-dot"></div>
+        <span>Monitoring Active</span>
+    </div>
+
+    <div class="video-container">
+        <img src="{{ url_for('video_feed') }}" class="video-feed" alt="Video Feed">
+        <div class="floating-symbol symbol-1">♀</div>
+        <div class="floating-symbol symbol-2">♀</div>
+        <div class="floating-symbol symbol-3">♀</div>
+        <div class="floating-symbol symbol-4">♀</div>
+        <div class="floating-symbol symbol-5">♀</div>
+        <div class="floating-symbol symbol-6">♀</div>
+    </div>
+
+    <div class="notification" id="notification">
+        <h2>Weapon Detected!</h2>
+        <p>You are in an unsafe zone.</p>
+        <p>An alert has been sent to your emergency contacts.</p>
+    </div>
+
+    <!-- Audio element for alert sound -->
+    <audio id="alertSound" src="{{ url_for('static', filename='sounds/siren-alarm.mp3') }}" preload="auto"></audio>
+
+    <script>
+        let isPlaying = false;
+        let lastDetectionState = false;
+        const alertSound = document.getElementById('alertSound');
+        const notification = document.getElementById('notification');
+
+        // Handle sound completion
+        alertSound.addEventListener('ended', function() {
+            isPlaying = false;
+        });
+
+        // Function to play sound
+        function playAlertSound() {
+            if (!isPlaying) {
+                isPlaying = true;
+                alertSound.currentTime = 0;
+                alertSound.play().catch(function(error) {
+                    console.log("Sound play failed:", error);
+                });
+            }
+        }
+
+        // Function to check weapon detection status
+        function checkStatus() {
+            fetch('/status')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.weapon_detected && !lastDetectionState) {
+                        notification.style.display = 'block';
+                        playAlertSound();
+                        document.querySelector('.status-dot').style.background = '#E63946';
+                        document.querySelector('.status-indicator span').textContent = 'ALERT: Weapon Detected';
+                    } else if (!data.weapon_detected && lastDetectionState) {
+                        notification.style.display = 'none';
+                        document.querySelector('.status-dot').style.background = '#4CAF50';
+                        document.querySelector('.status-indicator span').textContent = 'Monitoring Active';
+                    }
+                    lastDetectionState = data.weapon_detected;
+                })
+                .catch(error => {
+                    console.error("Error checking status:", error);
+                });
+        }
+
+        // Check status every second
+        setInterval(checkStatus, 1000);
+
+        // Initialize sound on user interaction
+        document.addEventListener('click', function() {
+            if (!alertSound.readyState) {
+                alertSound.load();
+            }
+        });
+    </script>
+</body>
+</html> 
